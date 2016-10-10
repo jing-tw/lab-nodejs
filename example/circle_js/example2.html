@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello World</title>
+  </head>
+  <script src="http://mbostock.github.com/d3/d3.v2.js"></script>
+  <body>
+    <script type="text/javascript">
+      var bodySelection = d3.select("body");
+ 
+      var svgSelection = bodySelection.append("svg")
+                                      .attr("width", 50)
+                                      .attr("height", 50);
+ 
+      var circleSelection = svgSelection.append("circle")
+                                        .attr("cx", 25)
+                                        .attr("cy", 25)
+                                        .attr("r", 25) 
+                                        .style("fill", "purple");
+ 
+    </script>
+    <p>Hello World!</p>
+  </body>
+</html>
