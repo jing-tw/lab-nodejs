@@ -9,9 +9,9 @@ var parser = parse({delimiter: ','}, function(err, data_2d){
 //     console.log("data=" + data_2d);              // print the array object
      console.log("data[0]="+ data_2d[0]);        // print the row0 dataset
 
-     var col3 = data_2d.map(function(col,index) { return col[2]; });
+     var col1 = data_2d.map(function(col,index) { return col[0]; });
  //    console.log("col3 = " + col3);
-     histogram(col3);
+     histogram(col1);
 });
 
 // Read the csv file and echo out to the parser
@@ -27,7 +27,7 @@ function histogram(array){
 
     for (i = 0; i < array.length; i++){
          bin = ((-1) * array[i]) / 5;          
-         bin = Math.round(bin);
+         bin = Math.floor(bin);
      //    console.log("array[" + i + "] = "+ array[i]);
      //    console.log("((-1) * array[i]) = " + ((-1) * array[i]));
      //	   console.log("bin = " + bin);
