@@ -1,5 +1,8 @@
 var fs = require('fs');
 var parse = require('csv-parse');
+var showhis = require('ascii-histogram');
+// var showhis = require('bars')
+var bytes = require('bytes');
 
 // Define a function that print out the data
 var parser = parse({delimiter: ','}, function(err, data_2d){
@@ -8,7 +11,6 @@ var parser = parse({delimiter: ','}, function(err, data_2d){
 
      var col3 = data_2d.map(function(col,index) { return col[2]; });
  //    console.log("col3 = " + col3);
-
      histogram(col3);
 });
 
@@ -26,11 +28,13 @@ function histogram(array){
     for (i = 0; i < array.length; i++){
          bin = ((-1) * array[i]) / 5;          
          bin = Math.round(bin);
-         console.log("array[" + i + "] = "+ array[i]);
-         console.log("((-1) * array[i]) = " + ((-1) * array[i]));
-	 console.log("bin = " + bin);
+     //    console.log("array[" + i + "] = "+ array[i]);
+     //    console.log("((-1) * array[i]) = " + ((-1) * array[i]));
+     //	   console.log("bin = " + bin);
          his[bin] = his[bin] + 1;
     }
 
     console.log("his = " + his);
-}  
+//    console.log(showhis(his,{ bar: '=', width: 40, sort: false} ));
+} 
+
