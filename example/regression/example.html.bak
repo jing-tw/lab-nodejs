@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello World</title>
+  </head>
+  <script src="http://mbostock.github.com/d3/d3.v2.js"></script>
+  <body>
+    <script type="text/javascript">
+
+       // 定義每一個圓的半徑
+       circleRadii = [40, 20, 10]
+
+        // 定義一個 svg Container 寬: 600, 高: 100
+        var svgContainer = d3.select("body").append("svg")
+                                         .attr("width", 600)
+                                         .attr("height", 100);
+
+        // 建立三個 circle html 物件
+        var circles = svgContainer.selectAll("circle")
+                               .data(circleRadii)
+                               .enter()
+                               .append("circle")
+
+        // 調整這三個 circle 的 attribute
+        var circleAttributes = circles
+                           .attr("cx", 50)
+                           .attr("cy", 50)
+                           .attr("r", function (d) { return d; })  // 根據傳進來的 circleRadii 
+                                                                                          // 調整圓的半徑
+                           .style("fill", function(d) {                     // 根據半徑, 調整 color
+                              var returnColor;
+                                if (d === 40) { returnColor = "green";
+                                } else if (d === 20) { returnColor = "purple";
+                                } else if (d === 10) { returnColor = "red"; }
+                                return returnColor;
+                            });
+    </script>
+    <p>Hello World!</p>
+  </body>
+</html>
+
+
