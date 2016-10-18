@@ -6,7 +6,7 @@ var Canvas = require('canvas')
 //define the fill colour of the rectangle
 ctx.fillStyle = "green";
 ctx.strokeStyle = "green";
-ctx.fillRect(1,10,100,30); 
+ctx.fillRect(1,10,100,30); // left, top, width, height
 ctx.stroke();
 
 
