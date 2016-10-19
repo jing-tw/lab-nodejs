@@ -4,7 +4,7 @@ var Canvas = require('canvas')
   , ctx = canvas.getContext('2d');
 
 //define the fill colour of the rectangle
-ctx.fillStyle = "green";
+ctx.fillStyle = "rgb(255, 165, 0)";
 ctx.strokeStyle = "green";
 ctx.fillRect(1,10,100,30); // left, top, width, height
 ctx.stroke();
