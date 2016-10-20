@@ -1,6 +1,17 @@
 var fs = require('fs');
 var parse = require('csv-parse');
 
+var inputfile =  "my_file.csv";
+var outfile = "out_hardcode_array.js";
+
+if ( process.argv.length < 3){
+    console.log("there is no arg");
+}else{
+    inputfile = process.argv[2];
+    outfile = inputfile + ".js";
+}
+console.log(inputfile);
+
 // Define a function that print out the data
 var parser = parse({delimiter: ','}, function(err, data){
 //     console.log("data="+data);              // print the array object
@@ -29,15 +40,20 @@ var parser = parse({delimiter: ','}, function(err, data){
       
      console.log("strCode = " + strCode);
 
-     fs.writeFile("out_hardcode_array.js", strCode, function(err) {
+     fs.writeFile(outfile, strCode, function(err) {
          if(err) {
              return console.log(err);
          }
 
           console.log("The file was saved!");
      }); 
+
+     console.log("input file = " + inputfile);
+     console.log("output file = " + outfile);
+
+    
 });
 
 // Read the csv file and echo out to the parser
-fs.createReadStream('my_file.csv').pipe(parser);
+fs.createReadStream(inputfile).pipe(parser);
 
