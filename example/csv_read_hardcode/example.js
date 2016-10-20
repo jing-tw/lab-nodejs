@@ -1,16 +1,27 @@
+// Usage
+//  node hardcode.js input.csv array_name
+// ex:
+//  node hardcode.js his.csv his
+//
 var fs = require('fs');
 var parse = require('csv-parse');
 
-var inputfile =  "my_file.csv";
-var outfile = "out_hardcode_array.js";
+var inputfile = "input.csv";
+var outputfile = inputfile + ".js";
 
-if ( process.argv.length < 3){
-    console.log("there is no arg");
+if ( process.argv.length < 4){
+    console.log("Usage:\nnode hardcode.js {input-file}.csv {array_name}");
+    console. log("Ex:\nnode hardcode.js his.csv his");
+    process.exit();
+
 }else{
     inputfile = process.argv[2];
-    outfile = inputfile + ".js";
+    outputfile = inputfile + ".js";
+    array_name = process.argv[3];
 }
 console.log(inputfile);
+console.log(outputfile);
+console.log("array_name = " + array_name);
 
 // Define a function that print out the data
 var parser = parse({delimiter: ','}, function(err, data){
@@ -22,7 +33,7 @@ var parser = parse({delimiter: ','}, function(err, data){
      // var Data = [ [1, 2, 3], 
      //            [4, 5, 6]];
 
-     var strCode = "var Data = [\n";
+     var strCode = "var " + array_name +" = [\n";
      for (var y = 0; y < data.length; y++){
        strCode = strCode + "[";
        for (var x = 0; x < data[0].length; x++){
@@ -40,18 +51,16 @@ var parser = parse({delimiter: ','}, function(err, data){
       
      console.log("strCode = " + strCode);
 
-     fs.writeFile(outfile, strCode, function(err) {
+     fs.writeFile(outputfile, strCode, function(err) {
          if(err) {
              return console.log(err);
          }
 
           console.log("The file was saved!");
+          console.log("inputfile = " + inputfile);
+          console.log("outputfile = " + outputfile);
+          console.log("array_name = " + array_name);
      }); 
-
-     console.log("input file = " + inputfile);
-     console.log("output file = " + outfile);
-
-    
 });
 
 // Read the csv file and echo out to the parser
