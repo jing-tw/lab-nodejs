@@ -1,0 +1,42 @@
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
+
+class App extends Component {
+  constructor (props) {
+    super(props);
+    this.state = {isChecked: false};
+
+    this.x = false;
+    this.onChange = this.onChange.bind(this);
+  }
+
+  onChange() {
+    this.setState({isChecked: this.state.isChecked});
+    this.x = !this.x;
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <div className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <h2>Welcome to React</h2>
+        </div>
+        <p className="App-intro">
+          To get started, edit <code>src/App.js</code> and save to reload.
+        </p>
+        <label>
+          <input 
+             type ="checkbox"
+             checked = {this.x}
+             onChange = {this.onChange}
+          />
+          {this.x ? "On" : "Off"}
+        </label>
+      </div>
+    );
+  }
+}
+
+export default App;
