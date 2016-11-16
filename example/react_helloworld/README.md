@@ -6,3 +6,7 @@
 
 == Proxy Setup ==
 vi ./system.sh
+
+== Proxy Quick Disable ==
+. ./util.sh
+ProxyGit
