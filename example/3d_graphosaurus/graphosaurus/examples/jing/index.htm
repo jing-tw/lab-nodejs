@@ -37,6 +37,22 @@
       var Axis_X = G.edge([zero, xEnd], {color: "blue"}).addTo(graph);
       var Axis_Y = G.edge([zero, yEnd], {color: "blue"}).addTo(graph);
       var Axis_Z = G.edge([zero, zEnd], {color: "blue"}).addTo(graph);
+
+
+      // draw x-y plan
+      for ( let x = 0; x < width; x++) {
+            let p1 = G.node([x * scaleXY, 0, 0], {color: "white"}).addTo(graph);
+            let p2 = G.node([x * scaleXY, MaxY * scaleXY, 0], {color: "white"}).addTo(graph);
+ 
+            G.edge([p1, p2], {color: "gray"}).addTo(graph);
+      }
+   
+      for ( let y = 0; y < height; y++) {
+            let p1 = G.node([0, y * scaleXY, 0], {color: "white"}).addTo(graph);
+            let p2 = G.node([MaxX * scaleXY, y * scaleXY, 0], {color: "white"}).addTo(graph);
+ 
+            G.edge([p1, p2], {color: "gray"}).addTo(graph);
+      }
       
       // draw error in 3D
       var NodeArray_2d = new Array(height);
@@ -45,11 +61,31 @@
         NodeArray_2d[y] = new Array(width);
         for ( let x = 0; x < width; x++) {
            let z = errorMap[y][x];
+           switch (true) {
+             case (z <= 2):
+                 NodeArray_2d[y][x] = G.node([x * scaleXY, y * scaleXY, z * scaleZ], {color: "#40ff00" }).addTo(graph);
+                 break;
+             case (z > 2 && z <=3):
+                 NodeArray_2d[y][x] = G.node([x * scaleXY, y * scaleXY, z * scaleZ], {color: "#bfff00" }).addTo(graph);
+                 break;
+             case (z > 3 && z <= 5):
+                 NodeArray_2d[y][x] = G.node([x * scaleXY, y * scaleXY, z * scaleZ], {color: "#ffbf00" }).addTo(graph);
+                 break;
+             case (z > 5 && z <= 9):
+                 NodeArray_2d[y][x] = G.node([x * scaleXY, y * scaleXY, z * scaleZ], {color: "#ff8000" }).addTo(graph);
+                 break;
+             default:
+                 NodeArray_2d[y][x] = G.node([x * scaleXY, y * scaleXY, z * scaleZ], {color: "#ff0000" }).addTo(graph);
+                 break;
+           } // end of switch
+
+           /*
            if (z > 3) {
              NodeArray_2d[y][x] = G.node([x * scaleXY, y * scaleXY, z * scaleZ], {color: "red"}).addTo(graph);
            }else{
              NodeArray_2d[y][x] = G.node([x * scaleXY, y * scaleXY, z * scaleZ], {color: "green"}).addTo(graph);  
            }
+           */
          } // end of x
        } // enod of y
 
