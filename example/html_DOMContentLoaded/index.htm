@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<script type="application/javascript">
+    window.addEventListener('DOMContentLoaded', function(e) {
+
+    var iFrame = document.getElementById( 'iFrame1' );
+    iFrame.height = screen.height;
+    iFrame.width = screen.width;
+
+    console.log("screen.width = " + screen.width); 
+    });
+</script>
+
+<body>
+	<iframe src="http://localhost:2012" id="iFrame1"> </iframe>	
+</body>
+</html>
