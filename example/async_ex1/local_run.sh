@@ -1,2 +1,2 @@
 #!/bin/bash
-node App.js
+node example.js
