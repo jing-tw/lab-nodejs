@@ -1,31 +1,27 @@
-'use strict';
-
-var fs = require('fs');
-
-
-function write(strMessage, strFilename) {
-  fs.writeFile(strFilename, strMessage, function(err) {
-     if(err) {
-       return console.log(err);
-      }
-      console.log("The file was saved!");
-   });
+function resolveAfter2Seconds(x) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(x);
+    }, 2000);
+  });
 }
 
-function read(strFilename) {
-  try {
-    let data = fs.readFileSync(strFilename);
-    console.log("read:: data = " + data);
-  } catch (e){
-    console.log("read:: error e = " + e);
-  }
-  
+async function add1(x) {
+  var a = resolveAfter2Seconds(20);
+  var b = resolveAfter2Seconds(30);
+  return x + await a + await b;
 }
 
-function main(){
-  let strFilename = "out.txt";
-  write("hello world", strFilename);
-  read(strFilename);
+add1(10).then(v => {
+  console.log(v);  // prints 60 after 2 seconds.
+});
+
+async function add2(x) {
+  var a = await resolveAfter2Seconds(20);
+  var b = await resolveAfter2Seconds(30);
+  return x + a + b;
 }
 
-main();
+add2(10).then(v => {
+  console.log(v);  // prints 60 after 4 seconds.
+});
