@@ -1,7 +1,8 @@
 #!/bin/bash
 #node example.js
 
-#d/dnpm i -g npm-run
-. ./local_init.sh
+npm i -g npm-run
+#. ./local_init.sh
+whereis npm-run
 npm-run browserify -t babelify example.js | node
 # node example.js
