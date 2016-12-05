@@ -1,9 +1,10 @@
 'use strict';
 
 // app.js
-const timeout = function (delay) {  
+const timeout = function (strMessage, delay) {  
   return new Promise((resolve, reject) => {
     setTimeout(() => {
+      console.log(strMessage);
       resolve()
     }, delay)
   })
@@ -11,7 +12,8 @@ const timeout = function (delay) {
 
 async function timer () {  
   console.log('timer started')
-  await Promise.resolve(timeout(100));
+  await Promise.resolve(timeout("Task 1 ", 100));
+  await Promise.resolve(timeout("Task 2", 10));
   console.log('timer finished')
 }
 
