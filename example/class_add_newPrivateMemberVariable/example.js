@@ -1,7 +1,7 @@
 // Private and privileged members can only be made when an object is constructed
 // Public method cannot invoked private method
-// You can use priviledge method to access the public and privated members.
-// The priviledged method can be invoked from outside/public method
+// You can use privilege method to access the public and privated members.
+// The privileged method can be invoked from outside/public method
 // 
 class TestClass {
 
@@ -23,15 +23,15 @@ class TestClass {
         myPrivateMethod1();     // OK: you can access your private method from any private method
     }
 
-    // priviledged method
-    this.myPriviledgedMethod = function () {
-       console.log("myPriviledgedMethod");
+    // privileged method
+    this.myPrivilegedMethod = function () {
+       console.log("myPrivilegedMethod");
 
        // access public method
-       this.publicMethod2();         // OK: You can access any public/private members from priviledge method
+       this.publicMethod2();         // OK: You can access any public/private members from privilege method
 
        // access private method
-       myPrivateMethod1();           // OK: You can access any public/private members from priviledge method 
+       myPrivateMethod1();           // OK: You can access any public/private members from privilege method 
     };
   }
 
@@ -42,7 +42,7 @@ class TestClass {
     // myPrivateMethod1();           // Error: You cannot access private method in public method
 
     this.myPublicVariable = 567;     // OK: You can access public variable in public method
-    this.myPriviledgedMethod();      // OK: You can access any priviledged method from public method
+    this.myPrivilegedMethod();      // OK: You can access any privileged method from public method
   }
 
   publicMethod2(){
@@ -55,4 +55,4 @@ class TestClass {
 let myTest1 = new TestClass();
 myTest1.publicMethod();               // OK: You can access any public method from outside.
 // myTest1.privateMethod1();          // Error: You cannot access private method from outside.
-myTest1.myPriviledgedMethod();        // OK: You can access "priviledgedMethod" from outside.
+myTest1.myPrivilegedMethod();        // OK: You can access "privilegedMethod" from outside.
