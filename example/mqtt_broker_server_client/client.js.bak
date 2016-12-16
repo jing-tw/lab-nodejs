@@ -1,0 +1,59 @@
+let ServerIP = null;
+let ServerPort = 1883;
+if ( process.argv.length < 3){
+    console.log("Usage:\n node client.js <mqtt server ip>");
+    process.exit();
+}else{
+    ServerIP = process.argv[2];    
+}
+
+
+let mqtt = require('mqtt');
+let host = ServerIP;
+let client = mqtt.connect({
+    port: ServerPort,
+    host: ServerIP,
+    clientId: 'client_qos_1',
+    clean: false
+  });
+
+client.on('connect', function(connack) {
+  console.log('Send message : hello mqtt');
+  
+  PublishData(client, "hello mqtt");
+});
+
+client.on('reconnect', function() {
+  console.log('===reconnect===');
+});
+
+client.on('close', function() {
+  console.log('===close===');
+});
+
+client.on('offline', function() {
+  console.log('===offline===');
+});
+
+client.on('error', function(error) {
+  console.log('===error===');
+});
+
+client.on('message', function(topic, message, packet) {
+  console.log('===message===');
+  console.log(message.toString());
+});
+
+function PublishData(myClient, strRSSIValue){
+  console.log("Send message: " + strRSSIValue);
+  
+  myClient.publish('topic_qos_1', strRSSIValue, {
+    qos: 1,
+    retain: false
+  }, function(err) {
+    if (err) {
+      console.log(err);
+    }
+  });
+}
+
