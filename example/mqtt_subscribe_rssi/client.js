@@ -1,6 +1,6 @@
 let noble = require('noble');
 let net = require('net');
-let MQTTPublicClientClass = require('./MQTTPublicClientClass.js');
+let MQTTClientClass = require('./MQTTClientClass.js');
 
 
 function main(){
@@ -18,12 +18,12 @@ function main(){
   }
 
   // Usage
-  let myPublishClient = new MQTTPublicClientClass(strClientID);
+  let myPublishClient = new MQTTClientClass(strClientID);
   myPublishClient.connectToBroker(ServerIP, ServerPort);
   // myPublishClient.publishData("myTopic_qos_1", "Hello World");
   
     // RSSI Part
-const MAX_SAMPLE_COUNT = 500;
+const MAX_SAMPLE_COUNT = 50000;
 let sampleCount = 0;
 
 noble.on('stateChange', function(state) {
