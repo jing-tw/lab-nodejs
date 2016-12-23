@@ -5,7 +5,7 @@ function main() {
   var retObj = myGenerator.next();                // start to run the MyGeneratorFunction
   console.log('myGenerator.next() = ', retObj);    
 
-  retObj = myGenerator.next();     // 
+  // retObj = myGenerator.next();     // 
   // console.log('myGenerator.next() = ', retObj); 
 
 }
@@ -21,7 +21,7 @@ function doAsyncFn(){
   let fs = require('fs');
   console.log('run doAsyncFn()');
 
-  strCode = "Hellow World\n";
+  strCode = "Hello World\n";
   fs.writeFile("out.txt", strCode, function(err) {
     if(err) {
       return console.log(err);
