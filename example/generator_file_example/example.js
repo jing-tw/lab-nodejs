@@ -1,13 +1,9 @@
 var myGenerator;
 
 function main() {
-  myGenerator = MyGeneratorFunction();
+  myGenerator = MyGeneratorFunction();            // Pause at first
   var retObj = myGenerator.next();                // start to run the MyGeneratorFunction
   console.log('myGenerator.next() = ', retObj);    
-
-  // retObj = myGenerator.next();     // 
-  // console.log('myGenerator.next() = ', retObj); 
-
 }
 
 // Generator Function includes codes requiring to sync 
@@ -36,10 +32,15 @@ function doAsyncFn(){
 function doAyncFnThatDependsOnA() {
   let fs = require("fs");
 
-  var data = fs.readFileSync('out.txt');
-  console.log("Synchronous read: " + data.toString());
-  console.log("End");
-  return data;
+  fs.readFile('out.txt', function (err, data) {
+    if (err) {
+      return console.error(err);
+    }
+    console.log("Asynchronous read: " + data.toString());
+    var retObj = myGenerator.next();     // <-------------- resume to the next
+    console.log('myGenerator.next() = ', retObj);
+  });
+
 }
 
 main();
