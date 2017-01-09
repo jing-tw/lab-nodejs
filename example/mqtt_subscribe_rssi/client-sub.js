@@ -1,5 +1,17 @@
 let MQTTClientClass = require('./MQTTClientClass.js');
 
+class MyClientClass extends MQTTClientClass {
+  constructor(strClientID){
+    super(strClientID);
+  }
+
+  onMessage(topic, message){
+    console.log(" == MyClientClass == ");
+    console.log("message = ", message);
+  }
+}
+
+
 function main(){
   let ServerIP = null;
   let ServerPort = 1883;
@@ -17,7 +29,7 @@ function main(){
   }
 
   // Usage
-  let mySubScribeClient = new MQTTClientClass(strClientID);
+  let mySubScribeClient = new MyClientClass(strClientID);
   mySubScribeClient.connectToBroker(ServerIP, ServerPort);
   mySubScribeClient.subscribe("myTopic_qos_1");
 }

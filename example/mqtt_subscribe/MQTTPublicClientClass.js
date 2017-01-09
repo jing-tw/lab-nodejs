@@ -8,10 +8,34 @@ module.exports = class MQTTPublicClientClass {
 
   subscribe(strTopic) {
     console.log(" == subscribe == ");
+    console.log('client id = ' + this.strClientID);
+    console.log('topic = ' + strTopic);
+
     this.client.subscribe(strTopic);
   }
   
+  publishData(strTopic, strMessage){
+    console.log(' == publish == ');
+    console.log('client id = ' + this.strClientID);
+    console.log('topic = ' + strTopic);
+    console.log('message = ' + strMessage);
+
+    this.client.publish(strTopic, strMessage, {
+      qos: 1,
+      retain: false
+      }, function(err) {
+        if (err) {
+          console.log(err);
+        }
+    });
+  };
+
   connectToBroker(brokerIP, brokerPort) {
+    console.log(' == connecting == ');
+    console.log('client id = ' + this.strClientID);
+    console.log('broker ip = ' + brokerIP);
+    console.log('broker port = ' + brokerPort);
+
     // console.log('== connectToBroker ==\n', this);
     this.client = this.mqtt.connect({
       port: brokerPort,
@@ -46,18 +70,6 @@ module.exports = class MQTTPublicClientClass {
 
   onConnect(connect) {
     console.log('onConnect');
-  };
-
-  publishData(strTopic, strMessage){
-    console.log("publishData:: Send message: " + strMessage);
-    this.client.publish(strTopic, strMessage, {
-      qos: 1,
-      retain: false
-      }, function(err) {
-        if (err) {
-          console.log(err);
-        }
-    });
   };
 
 } // end of class

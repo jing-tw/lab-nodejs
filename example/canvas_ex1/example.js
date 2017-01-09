@@ -20,9 +20,13 @@ var server,
         http=require('http');
         server=http.createServer(function(req,res){
             res.writeHead(200,{'Content-type':'image/png'});
-            // res.write('<img src="' + canvas.toDataURL() + '" />');    // show the image
-            // res.end(canvas);
-            canvas.pngStream().pipe(res);
+            
+ //            res.writeHead(200,{'Content-type':'text/plain'});
+             res.write('<img src="' + canvas.toDataURL() + '" />');    // show the image
+             res.end(canvas);
+ 
+         //   res.writeHead(200,{'Content-type':'image/png'});
+         //   canvas.pngStream().pipe(res);
             console.log('guest visted');
         });
 

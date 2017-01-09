@@ -14,9 +14,17 @@ function main(){
   }
 
   // Usage
+  let strTopic = 'myTopic_qos_1';
+
   let myPublishClient = new MQTTPublicClientClass(strClientID);
   myPublishClient.connectToBroker(ServerIP, ServerPort);
-  myPublishClient.publishData("myTopic_qos_1", "Hello World");
+
+  // Self subscribe test
+  myPublishClient.subscribe(strTopic);
+
+  // Publish test
+  myPublishClient.publishData(strTopic, "Hello World");
+
 }
 
 main();

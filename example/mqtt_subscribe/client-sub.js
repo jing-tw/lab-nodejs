@@ -20,6 +20,9 @@ function main(){
   let myPublishClient = new MQTTPublicClientClass(strClientID);
   myPublishClient.connectToBroker(ServerIP, ServerPort);
   myPublishClient.subscribe("myTopic_qos_1");
+
+  myPublishClient.subscribe("ABC");
+
 }
 
 main();

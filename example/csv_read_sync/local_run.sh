@@ -1,4 +1,4 @@
 #!/bin/bash
-#npm install csv
+npm install csv
 node example.js
 #firefox example.html

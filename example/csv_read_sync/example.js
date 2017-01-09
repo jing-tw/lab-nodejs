@@ -25,13 +25,21 @@ function ReadFileSyncExample(){
   for ( var i = 0; i < records.length; i ++) {
     console.log("i = " + i + " records[i] = " + records[i]);
   }
- 
+
+
+  console.log("records.length = " + records.length);
+  console.log("records[0].length = " + records[0].length);
+  console.log("records[1][1] = " + records[0][0]);
 }
 
 
 function main(){
   SimpleLineExample();
   ReadFileSyncExample();
+
+  console.log("1");
+  console.log("2");
+  console.log("3");
 }
 main();
 
