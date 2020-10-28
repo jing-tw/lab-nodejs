@@ -13,10 +13,21 @@ class TimeChart{
    *   lineObj = new TimeChart(strCanvasID);
    *   lineObj.run();
    */
-  private cfg: {wglp:WebGLplot, line:WebglLine}
+  private cfgPlot: {wglp:WebGLplot, line:WebglLine};
+  private cfbAnimation: {run:boolean};
 
   constructor(strCanvasID:string) {
-    this.cfg = TimeChart.__initTimeChart(strCanvasID);
+    this.cfgPlot = TimeChart.__initTimeChart(strCanvasID);
+    this.cfbAnimation = {run: false};
+  }
+
+  public run(){
+    this.cfbAnimation.run = true;
+    this.__startAni();
+  }
+
+  public stop(){
+    this.__stopAni();
   }
 
   private static __initTimeChart(strCanvasID:string):{wglp:WebGLplot, line:WebglLine} {
@@ -25,7 +36,7 @@ class TimeChart{
     canvas.width = canvas.clientWidth * devicePixelRatio;
     canvas.height = canvas.clientHeight * devicePixelRatio;
 
-    const numX =50*1000; //canvas.width;
+    const numX = canvas.width; // 50*1000;
     const color = new ColorRGBA(Math.random(), Math.random(), Math.random(), 1);
     let line1:WebglLine = new WebglLine(color, numX);
     let wglp1:WebGLplot = new WebGLplot(canvas);
@@ -36,27 +47,34 @@ class TimeChart{
     return {wglp:wglp1, line:line1};
   }
 
-  public run(){
+  private __stopAni(){
+    this.cfbAnimation.run = false;
+  }
+
+  private __startAni(){
+    if (!this.cfbAnimation.run)
+      return;
+
     requestAnimationFrame(() => {
       this.__newFrame();
     });
   }
 
   private __newFrame() {
-    this.updateData(this.cfg.line);
-    this.cfg.wglp.update();
-    this.run();
+    this.updateData();
+    this.cfgPlot.wglp.update();
+    this.__startAni();
   }
 
-  updateData(line:WebglLine){
+  updateData(){
     const freq = 0.001;
     const amp = 0.5;
     const noise = 0.1;
 
-    for (let i = 0; i < line.numPoints; i++) {
+    for (let i = 0; i < this.cfgPlot.line.numPoints; i++) {
       const ySin = Math.sin(Math.PI * i * freq * Math.PI * 2);
       const yNoise = Math.random() - 0.5;
-      line.setY(i, ySin * amp + yNoise * noise);
+      this.cfgPlot.line.setY(i, ySin * amp + yNoise * noise);
     }
   }
 }
@@ -70,11 +88,18 @@ class App extends Component {
   }
 
   componentDidMount() {
-    for(let i = 1; i<=12; i++){
-      let strCanvasID:string = 'my_canvas'+i;
+    let arrayTimeChart:Array<TimeChart> = [];
+
+    for(let i = 0; i<12; i++){
+      let strCanvasID:string = 'my_canvas'+(i+1);
       let timechartObj:TimeChart = new TimeChart(strCanvasID);
+      arrayTimeChart[i] = timechartObj;
       timechartObj.run();
     }
+
+    setTimeout(() => {
+      arrayTimeChart[0].stop();
+    }, 5000);
   }
 
   graphStyle = {
