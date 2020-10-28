@@ -1,139 +1,11 @@
 import React, {Component} from 'react';
 import './App.css';
 
-import DataPool, {Test_DataPool} from './DataPool';
-import WebGLplot, { WebglLine, ColorRGBA } from "webgl-plot";
-
-class TimeChart{
-  /**
-   * WlgLine draws time-serial plot on a HTML canvas
-   * @param strCanvasID
-   * 
-   * Usage:
-   *   lineObj = new TimeChart(strCanvasID);
-   *   lineObj.start((line:WebglLine) => {
-        const freq = 0.001;
-        const amp = 0.5;
-        const noise = 0.1;
-    
-        for (let i = 0; i < line.numPoints; i++) {
-          const ySin = Math.sin(Math.PI * i * freq * Math.PI * 2);
-          const yNoise = Math.random() - 0.5;
-          line.setY(i, ySin * amp + yNoise * noise);
-        }
-      });
-
-        lineObj.stop();  // stop
-        lineObj.start( ... ); // restart again
-   */
-  private cfgPlot: {wglp:WebGLplot, line:WebglLine};
-  private cfbAnimation: {run:boolean};
-  private cbDataUpdate: any;
-
-  constructor(strCanvasID:string) {
-    this.cfgPlot = TimeChart.__initTimeChart(strCanvasID);
-    this.cfbAnimation = {run: false};
-    this.cbDataUpdate = null;
-  }
-
-  public start(cbDataUpdate:any){
-    this.__startAni(cbDataUpdate);
-  }
-
-  public stop(){
-    this.__stopAni();
-  }
-
-  private static __initTimeChart(strCanvasID:string):{wglp:WebGLplot, line:WebglLine} {
-    const canvas:HTMLCanvasElement =  document.getElementById(strCanvasID) as HTMLCanvasElement;
-    const devicePixelRatio = window.devicePixelRatio || 1;
-    canvas.width = canvas.clientWidth * devicePixelRatio;
-    canvas.height = canvas.clientHeight * devicePixelRatio;
-
-    const numX = canvas.width; // 50*1000;
-    const color = new ColorRGBA(Math.random(), Math.random(), Math.random(), 1);
-    let line1:WebglLine = new WebglLine(color, numX);
-    let wglp1:WebGLplot = new WebGLplot(canvas);
-
-    line1.lineSpaceX(-1, 2 / numX);
-    wglp1.addLine(line1);
-
-    return {wglp:wglp1, line:line1};
-  }
-
-  private __stopAni(){
-    this.cfbAnimation.run = false;
-  }
-
-  private __startAni(cbDataUpdate:any){
-    this.cbDataUpdate = cbDataUpdate;
-    this.cfbAnimation.run = true;
-    requestAnimationFrame(() => {
-      this.__newFrame();
-    });
-  }
-
-  private __newFrame() {
-    if (!this.cfbAnimation.run)
-      return;
-
-    if (this.cbDataUpdate === null){
-      throw ("[Error] TimeChart:: __newFrame:: this.cbDataUpdate === null");
-    }
-
-    this.cbDataUpdate(this.cfgPlot.line);
-    this.cfgPlot.wglp.update();
-    requestAnimationFrame(() => {
-      this.__newFrame();
-    });
-  }
-}
-
-class TestTimeChart{
-  public static testStartStopRestart(){
-    let arrayTimeChart:Array<TimeChart> = [];
-
-    for(let i = 0; i<12; i++){
-      arrayTimeChart[i] = new TimeChart('my_canvas'+(i+1));
-      arrayTimeChart[i].start((line:WebglLine) => {
-        const freq = 0.001;
-        const amp = 0.5;
-        const noise = 0.1;
-    
-        for (let i = 0; i < line.numPoints; i++) {
-          const ySin = Math.sin(Math.PI * i * freq * Math.PI * 2);
-          const yNoise = Math.random() - 0.5;
-          line.setY(i, ySin * amp + yNoise * noise);
-        }
-      });
-    }
-
-    // test: stop channel 1
-    setTimeout(() => {
-      arrayTimeChart[0].stop();
-    }, 5000);
-
-    // test restart channel 1
-    setTimeout(() => {
-      arrayTimeChart[0].start(
-        (line:WebglLine) => {
-          const freq = 0.001;
-          const amp = 0.5;
-          const noise = 0.1;
-      
-          for (let i = 0; i < line.numPoints; i++) {
-            const yCos = Math.cos(Math.PI * i * freq * Math.PI * 2);
-            const yNoise = Math.random() - 0.5;
-            line.setY(i, yCos * amp + yNoise * noise);
-          }
-        }
-      );
-    }, 5000 + 2000);
-  }
-}
+// import DataPool, {Test_DataPool} from './DataPool';
+import Test_TimeChart from './Test_TimeChart';
 
 class App extends Component {
-  private __pool:DataPool = new DataPool();
+  // private __pool:DataPool = new DataPool();
 
   constructor(props:any) {
     super(props);
@@ -141,11 +13,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-    TestTimeChart.testStartStopRestart();
+    Test_TimeChart.run();
   }
 
   graphStyle = {
-    width: '700px',
+    width: '100%',
     height: '300px',
   };
 
