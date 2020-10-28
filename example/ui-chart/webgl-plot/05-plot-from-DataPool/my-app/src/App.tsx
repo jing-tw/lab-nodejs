@@ -13,17 +13,13 @@ class TimeChart{
    *   lineObj = new TimeChart(strCanvasID);
    *   lineObj.run();
    */
-  
-    private wglp:WebGLplot|null = null;
-    private line:WebglLine|null = null;
+  private cfg: {wglp:WebGLplot, line:WebglLine}
 
   constructor(strCanvasID:string) {
-    let retObj:{'line': WebglLine, 'wglp': WebGLplot} = TimeChart.__initTimeChart(strCanvasID);
-    this.wglp = retObj['wglp'];
-    this.line = retObj['line'];
+    this.cfg = TimeChart.__initTimeChart(strCanvasID);
   }
 
-  private static __initTimeChart(strCanvasID:string):{'line': WebglLine, 'wglp': WebGLplot} {
+  private static __initTimeChart(strCanvasID:string):{wglp:WebGLplot, line:WebglLine} {
     const canvas:HTMLCanvasElement =  document.getElementById(strCanvasID) as HTMLCanvasElement;
     const devicePixelRatio = window.devicePixelRatio || 1;
     canvas.width = canvas.clientWidth * devicePixelRatio;
@@ -31,13 +27,13 @@ class TimeChart{
 
     const numX =50*1000; //canvas.width;
     const color = new ColorRGBA(Math.random(), Math.random(), Math.random(), 1);
-    let line:WebglLine = new WebglLine(color, numX);
-    let wglp:WebGLplot = new WebGLplot(canvas);
+    let line1:WebglLine = new WebglLine(color, numX);
+    let wglp1:WebGLplot = new WebGLplot(canvas);
 
-    line.lineSpaceX(-1, 2 / numX);
-    wglp.addLine(line);
+    line1.lineSpaceX(-1, 2 / numX);
+    wglp1.addLine(line1);
 
-    return {'line': line, 'wglp': wglp};
+    return {wglp:wglp1, line:line1};
   }
 
   public run(){
@@ -47,10 +43,8 @@ class TimeChart{
   }
 
   private __newFrame() {
-    if (this.wglp === null || this.line === null)
-      return;
-    this.updateData(this.line);
-    this.wglp.update();
+    this.updateData(this.cfg.line);
+    this.cfg.wglp.update();
     this.run();
   }
 
