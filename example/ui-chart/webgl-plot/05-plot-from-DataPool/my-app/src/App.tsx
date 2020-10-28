@@ -11,18 +11,33 @@ class TimeChart{
    * 
    * Usage:
    *   lineObj = new TimeChart(strCanvasID);
-   *   lineObj.run();
+   *   lineObj.start((line:WebglLine) => {
+        const freq = 0.001;
+        const amp = 0.5;
+        const noise = 0.1;
+    
+        for (let i = 0; i < line.numPoints; i++) {
+          const ySin = Math.sin(Math.PI * i * freq * Math.PI * 2);
+          const yNoise = Math.random() - 0.5;
+          line.setY(i, ySin * amp + yNoise * noise);
+        }
+      });
+
+        lineObj.stop();  // stop
+        lineObj.start( ... ); // restart again
    */
   private cfgPlot: {wglp:WebGLplot, line:WebglLine};
   private cfbAnimation: {run:boolean};
+  private cbDataUpdate: any;
 
   constructor(strCanvasID:string) {
     this.cfgPlot = TimeChart.__initTimeChart(strCanvasID);
     this.cfbAnimation = {run: false};
+    this.cbDataUpdate = null;
   }
 
-  public start(){
-    this.__startAni();
+  public start(cbDataUpdate:any){
+    this.__startAni(cbDataUpdate);
   }
 
   public stop(){
@@ -50,7 +65,8 @@ class TimeChart{
     this.cfbAnimation.run = false;
   }
 
-  private __startAni(){
+  private __startAni(cbDataUpdate:any){
+    this.cbDataUpdate = cbDataUpdate;
     this.cfbAnimation.run = true;
     requestAnimationFrame(() => {
       this.__newFrame();
@@ -60,24 +76,16 @@ class TimeChart{
   private __newFrame() {
     if (!this.cfbAnimation.run)
       return;
-    this.updateData();
+
+    if (this.cbDataUpdate === null){
+      throw ("[Error] TimeChart:: __newFrame:: this.cbDataUpdate === null");
+    }
+
+    this.cbDataUpdate(this.cfgPlot.line);
     this.cfgPlot.wglp.update();
-    // this.__startAni();
     requestAnimationFrame(() => {
       this.__newFrame();
     });
-  }
-
-  updateData(){
-    const freq = 0.001;
-    const amp = 0.5;
-    const noise = 0.1;
-
-    for (let i = 0; i < this.cfgPlot.line.numPoints; i++) {
-      const ySin = Math.sin(Math.PI * i * freq * Math.PI * 2);
-      const yNoise = Math.random() - 0.5;
-      this.cfgPlot.line.setY(i, ySin * amp + yNoise * noise);
-    }
   }
 }
 
@@ -86,10 +94,18 @@ class TestTimeChart{
     let arrayTimeChart:Array<TimeChart> = [];
 
     for(let i = 0; i<12; i++){
-      let strCanvasID:string = 'my_canvas'+(i+1);
-      let timechartObj:TimeChart = new TimeChart(strCanvasID);
-      arrayTimeChart[i] = timechartObj;
-      timechartObj.start();
+      arrayTimeChart[i] = new TimeChart('my_canvas'+(i+1));
+      arrayTimeChart[i].start((line:WebglLine) => {
+        const freq = 0.001;
+        const amp = 0.5;
+        const noise = 0.1;
+    
+        for (let i = 0; i < line.numPoints; i++) {
+          const ySin = Math.sin(Math.PI * i * freq * Math.PI * 2);
+          const yNoise = Math.random() - 0.5;
+          line.setY(i, ySin * amp + yNoise * noise);
+        }
+      });
     }
 
     // test: stop channel 1
@@ -99,8 +115,20 @@ class TestTimeChart{
 
     // test restart channel 1
     setTimeout(() => {
-      arrayTimeChart[0].start();
-    }, 15000);
+      arrayTimeChart[0].start(
+        (line:WebglLine) => {
+          const freq = 0.001;
+          const amp = 0.5;
+          const noise = 0.1;
+      
+          for (let i = 0; i < line.numPoints; i++) {
+            const yCos = Math.cos(Math.PI * i * freq * Math.PI * 2);
+            const yNoise = Math.random() - 0.5;
+            line.setY(i, yCos * amp + yNoise * noise);
+          }
+        }
+      );
+    }, 5000 + 2000);
   }
 }
 
