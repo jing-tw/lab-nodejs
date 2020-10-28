@@ -21,7 +21,7 @@ class TimeChart{
     this.cfbAnimation = {run: false};
   }
 
-  public run(){
+  public start(){
     this.cfbAnimation.run = true;
     this.__startAni();
   }
@@ -79,6 +79,32 @@ class TimeChart{
   }
 }
 
+class TestTimeChart{
+  /**
+   *  
+   */
+  public static testStartStopRestart(){
+    let arrayTimeChart:Array<TimeChart> = [];
+
+    for(let i = 0; i<12; i++){
+      let strCanvasID:string = 'my_canvas'+(i+1);
+      let timechartObj:TimeChart = new TimeChart(strCanvasID);
+      arrayTimeChart[i] = timechartObj;
+      timechartObj.start();
+    }
+
+    // test: stop channel 1
+    setTimeout(() => {
+      arrayTimeChart[0].stop();
+    }, 5000);
+
+    // test restart channel 1
+    setTimeout(() => {
+      arrayTimeChart[0].start();
+    }, 15000);
+  }
+}
+
 class App extends Component {
   private __pool:DataPool = new DataPool();
 
@@ -88,18 +114,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    let arrayTimeChart:Array<TimeChart> = [];
-
-    for(let i = 0; i<12; i++){
-      let strCanvasID:string = 'my_canvas'+(i+1);
-      let timechartObj:TimeChart = new TimeChart(strCanvasID);
-      arrayTimeChart[i] = timechartObj;
-      timechartObj.run();
-    }
-
-    setTimeout(() => {
-      arrayTimeChart[0].stop();
-    }, 5000);
+    TestTimeChart.testStartStopRestart();
   }
 
   graphStyle = {
