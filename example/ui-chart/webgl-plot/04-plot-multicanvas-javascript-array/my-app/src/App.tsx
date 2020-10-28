@@ -4,13 +4,8 @@ import './App.css';
 import DataPool, {Test_DataPool} from './DataPool';
 import WebGLplot, { WebglLine, ColorRGBA } from "webgl-plot";
 
-
-
 class App extends Component {
   private __pool:DataPool = new DataPool();
-
-  arrayWglp:Array<WebGLplot|null> = [];
-  arrayLine:Array<WebglLine|null> = [];
 
   constructor(props:any) {
     super(props);
@@ -20,19 +15,18 @@ class App extends Component {
   componentDidMount() {
     for(let i = 1; i<=12; i++){
       let strCanvasID:string = 'my_canvas'+i;
-      console.log('strCanvasID = ', strCanvasID);
-      let retObj:{'line': WebglLine, 'wglp': WebGLplot} = this.init(strCanvasID);
+      let retObj:{'line': WebglLine, 'wglp': WebGLplot} = this.__initWglpLine(strCanvasID);
       this.run(retObj['wglp'],retObj['line']);
     }
   }
 
   run(wglp:WebGLplot, line:WebglLine){
     requestAnimationFrame(() => {
-      this.newFrame2(wglp, line);
+      this.__newFrame(wglp, line);
     });
   }
 
-  newFrame2(wglp:WebGLplot, line:WebglLine) {
+  __newFrame(wglp:WebGLplot, line:WebglLine) {
     if (wglp === null || line === null)
       return;
     this.updateData(line);
@@ -40,11 +34,7 @@ class App extends Component {
     this.run(wglp, line);
   }
 
-  init(strCanvasID:string): {'line': WebglLine, 'wglp': WebGLplot} {
-    return this.initWglpLine(strCanvasID);
-  }
-
-  initWglpLine(strCanvasID:string):{'line': WebglLine, 'wglp': WebGLplot} {
+  __initWglpLine(strCanvasID:string):{'line': WebglLine, 'wglp': WebGLplot} {
     const canvas:HTMLCanvasElement =  document.getElementById(strCanvasID) as HTMLCanvasElement;
     const devicePixelRatio = window.devicePixelRatio || 1;
     canvas.width = canvas.clientWidth * devicePixelRatio;
@@ -59,7 +49,6 @@ class App extends Component {
     wglp.addLine(line);
 
     return {'line': line, 'wglp': wglp};
-
   }
 
   updateData(line:WebglLine){
@@ -72,10 +61,6 @@ class App extends Component {
       const yNoise = Math.random() - 0.5;
       line.setY(i, ySin * amp + yNoise * noise);
     }
-  }
-
-  updateScreen(){
-    
   }
 
   graphStyle = {
@@ -113,7 +98,6 @@ class App extends Component {
         </div>
       )
   }
-
 }
 
 export default App;
