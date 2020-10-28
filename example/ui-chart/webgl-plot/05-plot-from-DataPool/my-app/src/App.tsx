@@ -22,7 +22,6 @@ class TimeChart{
   }
 
   public start(){
-    this.cfbAnimation.run = true;
     this.__startAni();
   }
 
@@ -52,18 +51,21 @@ class TimeChart{
   }
 
   private __startAni(){
-    if (!this.cfbAnimation.run)
-      return;
-
+    this.cfbAnimation.run = true;
     requestAnimationFrame(() => {
       this.__newFrame();
     });
   }
 
   private __newFrame() {
+    if (!this.cfbAnimation.run)
+      return;
     this.updateData();
     this.cfgPlot.wglp.update();
-    this.__startAni();
+    // this.__startAni();
+    requestAnimationFrame(() => {
+      this.__newFrame();
+    });
   }
 
   updateData(){
@@ -80,9 +82,6 @@ class TimeChart{
 }
 
 class TestTimeChart{
-  /**
-   *  
-   */
   public static testStartStopRestart(){
     let arrayTimeChart:Array<TimeChart> = [];
 
