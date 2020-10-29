@@ -84,6 +84,13 @@ export default class Test_TimeChart{
         // Test_TimeChart.test_StartStopRestart(); // ok
         // Test_TimeChart.test_PlotTimelineFromDataPool_v2(); // ok
         // Test_TimeChart.test_PlotTimelineFromDataPool_12L();  // ok
+        // Test_TimeChart.test_PlotTimelineFromDataPool_12L_leftright(); // ok
+        Test_TimeChart.runAllTest();
+    }
+    public static runAllTest(){
+        Test_TimeChart.test_StartStopRestart(); // ok
+        Test_TimeChart.test_PlotTimelineFromDataPool_v2(); // ok
+        Test_TimeChart.test_PlotTimelineFromDataPool_12L();  // ok
         Test_TimeChart.test_PlotTimelineFromDataPool_12L_leftright(); // ok
     }
 
@@ -149,7 +156,11 @@ export default class Test_TimeChart{
     public static test_PlotTimelineFromDataPool_v2(){
         let __pool:DataPool = new DataPool();
         let totalData:number = 60 * 300;
-        __pool.addRandomData(totalData);
+        // __pool.addRandomData(totalData);
+        const numFreq = 0.001;
+        const numAmp = 0.5;
+        const numNoise = 0;
+        __pool.addSinData(totalData, numFreq, numAmp, numNoise);
 
         let i:number = 0;
 
@@ -169,7 +180,7 @@ export default class Test_TimeChart{
 
         for(let i = 0; i < 12; i++){
             let numScreenWidth:number = 10 * 300;
-            let numChunk:number = 30;
+            let numChunk:number = 40;
             let numArrayChunkZero:Array<number> = new Array<number>(numChunk).fill(0);
             let screen:Array<number> = new Array<number>(numScreenWidth);
 
