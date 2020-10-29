@@ -1,4 +1,4 @@
-import DataPool, {Test_DataPool} from './DataPool';
+
 import WebGLplot, { WebglLine, ColorRGBA } from "webgl-plot";
 
 export default class TimeChart{
@@ -27,8 +27,8 @@ export default class TimeChart{
   private cfbAnimation: {run:boolean};
   private cbDataUpdate: any;
 
-  constructor(strCanvasID:string) {
-    this.cfgPlot = TimeChart.__initTimeChart(strCanvasID);
+  constructor(strCanvasID:string, numX:number=-1, numR:number=-1, numG:number=-1, numB:number=-1) {
+    this.cfgPlot = TimeChart.__initTimeChart(strCanvasID, numX, numR, numG, numB);
     this.cfbAnimation = {run: false};
     this.cbDataUpdate = null;
   }
@@ -41,14 +41,21 @@ export default class TimeChart{
     this.__stopAni();
   }
 
-  private static __initTimeChart(strCanvasID:string):{wglp:WebGLplot, line:WebglLine} {
+  private static __initTimeChart(strCanvasID:string, numX:number=-1, numR:number=-1, numG:number=-1, numB:number=-1):{wglp:WebGLplot, line:WebglLine} {
     const canvas:HTMLCanvasElement =  document.getElementById(strCanvasID) as HTMLCanvasElement;
     const devicePixelRatio = window.devicePixelRatio || 1;
     canvas.width = canvas.clientWidth * devicePixelRatio;
     canvas.height = canvas.clientHeight * devicePixelRatio;
 
-    const numX = canvas.width; // 50*1000;
-    const color = new ColorRGBA(Math.random(), Math.random(), Math.random(), 1);
+    if (numX === -1){
+        numX = canvas.width; // 50*1000;
+    }
+    let color:ColorRGBA;
+    if (numR === -1 || numG === -1 || numB === -1){
+        color = new ColorRGBA(Math.random(), Math.random(), Math.random(), 1);
+    } else{
+        color = new ColorRGBA(numR, numG, numB, 1);
+    }
     let line1:WebglLine = new WebglLine(color, numX);
     let wglp1:WebGLplot = new WebGLplot(canvas);
 
