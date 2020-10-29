@@ -15,14 +15,24 @@ export default class DataPool {
       }
     }
 
+    public addSinData(numMountData:number, numFreq:number, numAmp:number, numNoise:number){
+      for (let i = 0; i < numMountData; i++){
+        const ySin = Math.sin(Math.PI * i * numFreq * Math.PI * 2);
+        const yNoise = Math.random() - 0.5;
+        this.__pool.push(ySin * numAmp + yNoise * numNoise);
+      }
+    }
+
     public addNumArray(numDataArray:Array<number>) {
-      this.__pool = this.__pool.concat(numDataArray);
+      // this.__pool = this.__pool.concat(numDataArray);
+      this.__pool.splice(-1, 0, ...numDataArray); // 放資料在最右邊 (no copy)
     }
 
     public removeArrayData(numDataNum:number): Array<number>{
-      let numArrayData:Array<number> = this.__pool.slice(0, numDataNum);
-      this.__pool = this.__pool.slice(numDataNum);
+      // let numArrayData:Array<number> = this.__pool.slice(0, numDataNum);
+      // this.__pool = this.__pool.slice(numDataNum);
 
+      let numArrayData:Array<number> = this.__pool.splice(0, numDataNum); // 滑動
       return numArrayData;
     }
 
