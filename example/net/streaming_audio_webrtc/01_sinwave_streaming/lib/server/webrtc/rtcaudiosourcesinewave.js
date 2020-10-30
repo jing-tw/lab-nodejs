@@ -27,8 +27,8 @@ class RTCAudioSourceSineWave {
 
     const bitsPerSample = 16;
     const maxValue = Math.pow(2, bitsPerSample) / 2 - 1;
-    const numberOfFrames = sampleRate / 100;
-    const secondsPerSample = 1 / sampleRate;
+    const numberOfFrames = sampleRate / 100;             // 10 ms 量的 samples 數
+    const secondsPerSample = 1 / sampleRate;             
     const source = new RTCAudioSource();
     const samples = new Int16Array(channelCount * numberOfFrames);
 
@@ -58,10 +58,10 @@ class RTCAudioSourceSineWave {
       }
       source.onData(data);
       // eslint-disable-next-line
-      scheduled = options.schedule(next);
+      scheduled = options.schedule(next);  // 一直不斷的執行填滿資料的工作 (一次以 10ms 的 samples 量填入)
     }
 
-    let scheduled = options.schedule(next);
+    let scheduled = options.schedule(next); // 立刻啟動第一次的填資料工作
 
     this.close = () => {
       options.unschedule(scheduled);

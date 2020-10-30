@@ -1,0 +1,6 @@
+Interface: docker0, datalink type: EN10MB (Ethernet)
+Starting arp-scan 1.8.1 with 65536 hosts (http://www.nta-monitor.com/tools/arp-scan/)
+172.17.0.2	02:42:ac:11:00:02	(Unknown)
+
+1 packets received by filter, 0 packets dropped by kernel
+Ending arp-scan 1.8.1: 65536 hosts scanned in 263.596 seconds (248.62 hosts/sec). 1 responded
