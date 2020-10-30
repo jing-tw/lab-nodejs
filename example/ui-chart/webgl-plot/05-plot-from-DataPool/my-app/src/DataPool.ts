@@ -25,7 +25,8 @@ export default class DataPool {
 
     public addNumArray(numDataArray:Array<number>) {
       // this.__pool = this.__pool.concat(numDataArray);
-      this.__pool.splice(-1, 0, ...numDataArray); // 放資料在最右邊 (no copy)
+      // this.__pool.splice(numDataArray.length, 0, ...numDataArray); // 放資料在最右邊 (no copy)
+      this.__pool.push(...numDataArray);
     }
 
     public removeArrayData(numDataNum:number): Array<number>{
