@@ -26,7 +26,7 @@
     "express": "^4.16.4",
     "fluent-ffmpeg": "^2.1.2",
     "fluent-ffmpeg-multistream": "^1.0.0",
-    "node-fetch": "^2.3.0",
+    "node-fetch": "^2.6.1",
     "uuid": "^3.3.2",
     "wrtc": "^0.4.3"
   },
