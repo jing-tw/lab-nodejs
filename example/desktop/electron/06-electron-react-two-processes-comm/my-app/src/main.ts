@@ -37,6 +37,15 @@ function createWindow() {
         // when you should delete the corresponding element.
         mainWindow = null
     })
+
+
+    // main process --> render process
+    mainWindow.webContents.on('did-finish-load', () => {
+        if (mainWindow === null){
+            return;
+        }
+        mainWindow.webContents.send('fromMainProcess', 'whoooooooh!')
+      })
 }
 
 // This method will be called when Electron has finished
@@ -70,4 +79,6 @@ import { ipcMain } from 'electron';
 ipcMain.handle('perform-action', (event, ...args) => {
   // ... do actions on behalf of the Renderer
   console.log('ipcMain hello');
+  console.log('args = ' + args);
 })
+

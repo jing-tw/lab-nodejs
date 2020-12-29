@@ -5,7 +5,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 // import { ipcRenderer } from 'electron'
-const { ipcRenderer } = window.require("electron");
+const { ipcRenderer, IpcRendererEvent } = window.require("electron");
+// import {IpcRendererEvent} from 'electron';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -23,3 +24,8 @@ reportWebVitals();
 let lstData:Array<number|string> = [1, 'string'];
 ipcRenderer.invoke('perform-action', lstData);
 console.log('index.tsx')
+
+ipcRenderer.on('fromMainProcess', (event: typeof IpcRendererEvent, ...args:Array<any>) => {
+  console.log('args from Main process = ' + args) // Prints 'whoooooooh!'
+})
+
