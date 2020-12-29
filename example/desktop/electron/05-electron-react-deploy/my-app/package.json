@@ -21,11 +21,12 @@
   "homepage": "./",
   "main": "build/main.js",
   "scripts": {
-    "start": "electron-forge start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "electron": "tsc src/main.ts && cp ./src/main.js ./build/main.js && electron .",
+    "electron:start": "electron-forge start",
     "clean": "rm -fr out; rm -fr build; rm -fr dist; rm -fr node_modules; find . -name \"*.js\" -type f|xargs rm -f; find . -name \"*.map\" -type f|xargs rm -f; find . -name \"*.raw\" -type f|xargs rm -f; find . -name \"*.log\" -type f|xargs rm -f",
     "package": "electron-forge package",
     "make": "electron-forge make"
