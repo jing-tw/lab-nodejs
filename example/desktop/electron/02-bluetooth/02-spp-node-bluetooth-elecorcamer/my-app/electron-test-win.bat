@@ -1,7 +1,7 @@
 @echo "== Clean all =="
-del /s /q .\build  1>null
-del /s /q .\node_modules 1>null
-del /s /q .\node-bluetooth-elecorcamer 1>null
+del /s /q /f .\build  1>null
+del /s /q /f .\node_modules 1>null
+del /s /q /f .\node-bluetooth-elecorcamer 1>null
 rmdir /S /Q .\build .\node_modules .\node-bluetooth-elecorcamer
 @REM yarn clean   # reinstall
 
