@@ -1,6 +1,0 @@
-rm -fr node_modules   # reinstall
-yarn install       # install package
-./node_modules/.bin/electron-rebuild    # rebuild the package for electron node
-npm rebuild    # rebuild all package
-yarn build       # package for electron 
-yarn electron  # run test

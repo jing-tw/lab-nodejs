@@ -14,7 +14,7 @@
     "@types/react-dom": "^16.9.8",
     "bindings": "^1.5.0",
     "electron-squirrel-startup": "^1.0.0",
-    "node-bluetooth": "file:./node-bluetooth-elecorcamer/node-bluetooth",
+    "node-bluetooth": "file:./elecorcamer/node-bluetooth",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.1",
@@ -29,14 +29,12 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electron:linux": "tsc src/main.ts && cp ./src/*.js ./build && electron .",
-    "electron:win": "tsc src\\main.ts && copy .\\src\\*.js .\\build && node_modules\\.bin\\electron .",
-    "electron:build": "tsc src/main.ts && npx shx cp ./src/*.js ./build",
+    "electron": "tsc src/main.ts && npx copyfiles -u 1 src/*.js build && npx electron .",
     "electron:start": "electron-forge start",
-    "clean": "rm -fr node-bluetooth-elecorcamer; rm -fr out; rm -fr build; rm -fr dist; rm -fr node_modules; find . -name \"*.js\" -type f|xargs rm -f; find . -name \"*.map\" -type f|xargs rm -f; find . -name \"*.raw\" -type f|xargs rm -f; find . -name \"*.log\" -type f|xargs rm -f",
+    "clean": "rimraf elecorcamer out build dist node_modules & rimraf **/*.js & rimraf **/*.map & rimraf **/*.raw & rimraf **/*.log",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "pull:node-bluetooth": "mkdir node-bluetooth-elecorcamer && cd node-bluetooth-elecorcamer  &&  git clone https://github.com/eelcocramer/node-bluetooth.git && cd node-bluetooth && yarn install",
+    "pull:node-bluetooth": "mkdir elecorcamer && cd elecorcamer  &&  git clone https://github.com/eelcocramer/node-bluetooth.git && cd node-bluetooth && yarn install",
     "test:test_lstAllSPPDevices": "tsc src/Test_BleSpp.ts && node src/Test_BleSpp.js"
   },
   "eslintConfig": {
@@ -63,9 +61,11 @@
     "@electron-forge/maker-rpm": "^6.0.0-beta.54",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
     "@electron-forge/maker-zip": "^6.0.0-beta.54",
+    "copyfiles": "^2.4.1",
     "electron": "6.1.12",
     "electron-rebuild": "2.3.4",
-    "npm-run-all": "^4.1.5"
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^3.0.2"
   },
   "config": {
     "forge": {
