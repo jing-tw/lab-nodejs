@@ -22,7 +22,7 @@ NodeJS 12.x			https://nodejs.org/dist/latest-v12.x/
 # Install 
 ```bash
 yarn pull:node-bluetooth
-yarn add file:./node-bluetooth-elecorcamer/node-bluetooth
+yarn add file:./elecorcamer/node-bluetooth
 yarn install
 ```
 
