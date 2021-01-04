@@ -31,7 +31,7 @@
     "eject": "react-scripts eject",
     "electron": "tsc src/main.ts && npx copyfiles -u 1 src/*.js build && npx electron .",
     "electron:start": "electron-forge start",
-    "clean": "rimraf elecorcamer out build dist node_modules & rimraf **/*.js & rimraf **/*.map & rimraf **/*.raw & rimraf **/*.log",
+    "clean": "npx rimraf elecorcamer out build dist node_modules && npx rimraf **/*.js && npx rimraf **/*.map && npx rimraf **/*.raw && npx rimraf **/*.log",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "pull:node-bluetooth": "mkdir elecorcamer && cd elecorcamer  &&  git clone https://github.com/eelcocramer/node-bluetooth.git && cd node-bluetooth && yarn install",
