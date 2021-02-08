@@ -1,0 +1,16 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rimraf out build dist node_modules & rimraf **/*.js & rimraf **/*.map & rimraf **/*.raw & rimraf **/*.log",
+    "start": "tsc && gio open ./src/index.html"
+  },
+  "dependencies": {
+    "@types/web-bluetooth": "^0.0.9"
+  },
+  "devDependencies": {
+    "rimraf": "^3.0.2"
+  }
+}
