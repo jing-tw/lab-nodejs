@@ -41,18 +41,33 @@ noble.on('discover', async (peripheral:Peripheral) => {
   console.log('connectted');
 
   printBLEPeripheral(peripheral);
-  peripheral.discoverAllServicesAndCharacteristics( async (error, services, characteristics) => {
+
+
+  peripheral.discoverServices(['80015ABC-6E53-11E4-B116-123B93F75CBA'], async (error, services) => {
     if (!error) {
       console.log('discoverAllServicesAndCharacteristics');
       console.log("[---") 
       console.log("Services: \n" + "["+services+"]")
-      console.log("Characteristics: \n" + "[" + characteristics + "]")
       console.log("---]\n")
     } else{
         console.log("[error] " + error)
     }
     await peripheral.disconnectAsync();
   });
+
+  // work
+  // peripheral.discoverAllServicesAndCharacteristics( async (error, services, characteristics) => {
+  //   if (!error) {
+  //     console.log('discoverAllServicesAndCharacteristics');
+  //     console.log("[---") 
+  //     console.log("Services: \n" + "["+services+"]")
+  //     console.log("Characteristics: \n" + "[" + characteristics + "]")
+  //     console.log("---]\n")
+  //   } else{
+  //       console.log("[error] " + error)
+  //   }
+  //   await peripheral.disconnectAsync();
+  // });
 
   
 
