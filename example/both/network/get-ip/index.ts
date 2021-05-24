@@ -1,4 +1,4 @@
-import UtilNet from '../00-module/src/UtilNet'
+import UtilNet from '../00-common-util/src/UtilNet'
 
 function main(){
     const {lstIpObj, bOk, strMsg} = UtilNet.getIP();
