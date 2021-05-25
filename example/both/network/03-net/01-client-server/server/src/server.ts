@@ -1,5 +1,6 @@
 import net, {Server, AddressInfo} from 'net'
-import config  = require('../config/dev');
+//import config  = require('../config/dev');
+import config from '../config/dev'
 
 let port:number = config.machine.port;
 

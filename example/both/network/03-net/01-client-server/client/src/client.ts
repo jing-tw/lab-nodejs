@@ -1,5 +1,7 @@
 import net, {Socket} from 'net'
-import config  = require('../config/dev');
+// import config  = require('../config/dev');
+// import {default as config} from '../config/dev'
+import config from '../config/dev'
 
 let client:Socket = new net.Socket();
 
