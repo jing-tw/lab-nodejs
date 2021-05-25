@@ -1,0 +1,33 @@
+<head>
+    <script src="https://rawgit.com/kevincennis/Scope/master/dist/Scope.js"></script>
+</head>
+
+<body>
+    <canvas id="osc" width="600" height="300"></canvas>
+    <script>
+        let button = document.createElement('button');
+        button.innerHTML = 'Show';  // set the button content = "ok"
+        button.addEventListener('click', function() {
+            var canvas = document.querySelector('canvas'),
+            
+            // create audio content
+            ac = new (window.AudioContext || window.webkitAudioContext)();
+            osc = ac.createOscillator(),    // create periodic waveform source
+            
+            // setup wave type
+            osc.type = 'square';
+            osc.frequency.value = 10; // in Hz
+            
+            // create graph
+            scope = new Scope(ac, canvas); // create oscilloscope device for display audiosource on canvas
+            osc.connect(scope.input); // [osc source] -> [the display intput]
+            
+            // render
+            osc.start(); // start the source
+            scope.start(); // start the oscilloscope device
+        });
+
+        var body = document.getElementsByTagName("body")[0];
+        body.appendChild(button);
+    </script>
+</body>
