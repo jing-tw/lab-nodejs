@@ -1,0 +1,28 @@
+{
+  "name": "UtilNet",
+  "version": "1.0.0",
+  "description": "network utility",
+  "main": "UtilNet.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "clean": "npm-run-all clean:all_js clean:all_map clean:all_modules",
+    "clean:dev": "npm-run-all clean:all_js clean:all_map clean:log clean:debugfile",
+    "clean:all_js": "find . -name \"*.js\" -type f|xargs rm -f",
+    "clean:all_map": "find . -name \"*.map\" -type f|xargs rm -f",
+    "clean:log": "find . -name \"*.log\" -type f|xargs sudo chmod 777; find . -name \"*.log\" -type f|xargs rm -f",
+    "clean:debugfile": "find . -name \"*.csv\" -type f|xargs sudo chmod 777; find . -name \"*.csv\" -type f|xargs rm -f",
+    "clean:all_modules": "rm -fr node_modules"
+  },
+  "dependencies": {
+    "npm-run-all": "^4.1.5",
+    "ts-node": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.15",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.4.3",
+    "typescript": "^4.0.5"
+  }
+}
