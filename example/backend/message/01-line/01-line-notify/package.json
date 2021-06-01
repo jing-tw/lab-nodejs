@@ -1,0 +1,17 @@
+{
+  "name": "01-line-notify",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rimraf out build dist node_modules & rimraf **/*.js & rimraf **/*.map & rimraf **/*.raw & rimraf **/*.log"
+  },
+  "dependencies": {
+    "@types/needle": "^2.5.1",
+    "form-data": "^4.0.0",
+    "needle": "^2.6.0"
+  },
+  "devDependencies": {
+    "rimraf": "^3.0.2"
+  }
+}
