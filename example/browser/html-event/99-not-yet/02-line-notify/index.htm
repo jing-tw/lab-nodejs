@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+<script type="application/javascript">
+    function createBt(){
+        let button = document.createElement('button');
+        button.innerHTML = 'ok';  // set the button content = "ok"
+        button.addEventListener('click', function() {
+            console.log('clicked');
+            sendMsg();
+        });
+        var body = document.getElementsByTagName("body")[0];
+        body.appendChild(button);
+    }
+    function sendMsg(){
+        console.log('LINE notify test');
+        const urlEndPoint = 'https://notify-api.line.me/api/notify';
+
+        var data = {
+            message: 'send from XMLHttpRequest',
+            // imageFile: bufContent
+        }
+
+        var options = {
+            multipart: true,    // must have for sending image.
+            json: true,
+            headers: { 'Authorization': 'Bearer eBTHTlHvJJXX8Bc6WsQ8XPs05j75Vbz4rj7FNgrivVj' }
+        }
+
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() { // Call a function when the state changes.
+            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                // Request finished. Do processing here.
+                console.log('LINE notify test ok');
+            }
+        }
+
+        xhr.open("POST", urlEndPoint, true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.setRequestHeader('Authorization', 'Bearer eBTHTlHvJJXX8Bc6WsQ8XPs05j75Vbz4rj7FNgrivVj');
+        xhr.send('message='+data.message)
+    }
+    createBt();
+</script>
+</html>
