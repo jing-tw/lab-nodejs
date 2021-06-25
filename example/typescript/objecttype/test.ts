@@ -27,11 +27,26 @@ function getParamUrl(para:Status):string{
     return url;
 }
 
+function getParamUrl2<T>(para:T):string{
+    var url = '?';
+    let bFirst = false;
+
+    for (var prop in para) {
+        url += (bFirst ? '&' : '') + prop + "=" + para[prop as keyof T];
+        bFirst = true;
+    }
+
+    return url;
+}
+
 function main(){
     Test();
 
     let statusPara:Status = {id: 123, msg:'this is the msg'};
     let url = getParamUrl(statusPara);
     console.log('url = ' + url);
+
+    let url2 = getParamUrl2<Status>(statusPara);
+    console.log('url2 = ' + url2);
 }
 main();
