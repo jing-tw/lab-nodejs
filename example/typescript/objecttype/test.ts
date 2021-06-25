@@ -31,8 +31,10 @@ function getParamUrl2<T>(para:T):string{
     var url = '?';
     let bFirst = false;
 
-    for (var prop in para) {
-        url += (bFirst ? '&' : '') + prop + "=" + para[prop as keyof T];
+    for (var key in para) {
+        if ((para as Object).hasOwnProperty(key)) {
+            url += (bFirst ? '&' : '') + key + "=" + para[key as keyof T];
+        }
         bFirst = true;
     }
 
