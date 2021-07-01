@@ -1,0 +1,13 @@
+{
+  "name": "01-helloworld",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts":{
+    "clean" : "rm -fr dist; rm -fr node_modules; find . -name \"*.js\" -type f|xargs rm -f; find . -name \"*.map\" -type f|xargs rm -f; find . -name \"*.raw\" -type f|xargs rm -f; find . -name \"*.log\" -type f|xargs rm -f"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@types/mongodb": "^3.6.19",
+    "mongodb": "^3.6.9"
+  }
+}
