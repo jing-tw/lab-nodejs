@@ -1,0 +1,132 @@
+// API Doc: https://www.eclipse.org/paho/files/jsdoc/Paho.MQTT.Client.html
+
+'use strict';
+
+let strBrokerIP = "192.168.1.108"; // "172.20.10.3";
+let strTopic = "World";
+let client = null;
+let message = null;
+let body = document.getElementsByTagName("body")[0];
+let eleStatus = null;
+
+
+function createHtmlElement(strStyle, strTitle, funClickCallback){
+  let ele = document.createElement(strStyle);
+  if(strTitle != null)
+    ele.innerHTML = strTitle;
+  if (funClickCallback != null)
+    ele.addEventListener('click', funClickCallback);
+  return ele;
+}
+
+function createHtmlBr(body){
+  let ele = createHtmlElement('br', null, null);
+  if(body == null){
+    console.log('Error: createHtmlBr::body == null')
+    return null;
+  }
+
+  body.appendChild(ele);
+  return ele;
+}
+
+function createHtmlButton(strtitle, funClickCallback, body){
+  let ele = createHtmlElement('button', strtitle, funClickCallback);
+  if(body == null){
+    console.log('Error: createHtmlButton::body == null')
+    return null;
+  }
+
+  body.appendChild(ele);
+  return ele;
+}
+
+function createHtmlPTag(strtitle, body){
+  let ele = createHtmlElement('p', strtitle, null);
+  if(body == null){
+    console.log('Error: createHtmlPTag::body == null')
+    return null;
+  }
+  body.appendChild(ele);
+  return ele;
+}
+
+function updatePTagTitle(eleStatus, strTitle){
+  if(eleStatus == null){
+    console.log('Error: eleStatus == null.');
+    return;
+  }
+  eleStatus.innerText = strTitle;
+  console.log('UpdatePTagTitle:: ' + strTitle)
+}
+
+function cbConnect(){
+    console.log('cbConnect::start to connect and send message');
+    let clientId = "clientId" + Math.floor(Math.random() * 10).toString();
+    console.log('clientId = ' + clientId);
+    client = new Paho.MQTT.Client(strBrokerIP, Number(9001), clientId);
+    client.onConnectionLost = onMQTTConnectionLost;
+    client.connect({onSuccess:onMQTTConnect});
+}
+
+function cbSendRandomMsg() {
+  
+  if (client == null) {
+    console.log('client == null. Not connected?')
+    return;
+  }
+
+  let strMsg =  Math.floor(Math.random() * 10).toString();
+  message = new Paho.MQTT.Message(strMsg);
+  message.destinationName = strTopic;
+  client.send(message);
+
+
+  console.log("cbSendRandomMsg:" + strMsg)
+  updatePTagTitle(eleStatus, "cbSendRandomMsg:" + strMsg);
+}
+
+function cbRegReceiver() {
+  console.log('Register to received a messages');
+  if (client == null) {
+    console.log('client == null. Not connected?')
+    return;
+  }
+  client.onMessageArrived = onMQTTMessageArrived;
+}
+
+
+function onMQTTConnect() {
+  console.log("onConnect");
+  updatePTagTitle(eleStatus, "onConnected");
+  client.subscribe("World");
+}
+
+function onMQTTConnectionLost(responseObject) {
+  if (responseObject.errorCode !== 0) {
+    console.log("onConnectionLost:"+responseObject.errorMessage);
+    updatePTagTitle(eleStatus, "onConnectionLost:"+responseObject.errorMessage);
+  }
+}
+
+function onMQTTMessageArrived(message) {
+  console.log("onMessageArrived:"+message.payloadString);
+  updatePTagTitle(eleStatus, "onMessageArrived:"+message.payloadString);
+}
+
+function uiMainBuild(){
+  let btConnect = createHtmlButton("1. Connect", cbConnect, body);
+  let BrTag = createHtmlBr(body);
+  let btSend = createHtmlButton("2. Send Random number", cbSendRandomMsg, body);
+  let btRegReive = createHtmlButton("(3). Reg receiver", cbRegReceiver, body);
+
+  createHtmlBr(body);createHtmlBr(body);
+  eleStatus = createHtmlPTag("Status", body);
+  
+}
+
+function main(){
+  uiMainBuild();
+}
+
+main();
