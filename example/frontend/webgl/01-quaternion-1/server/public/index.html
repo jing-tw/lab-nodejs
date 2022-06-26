@@ -1,0 +1,48 @@
+<!-- This example was copy from here, https://openhome.cc/Gossip/WebGL/Quaternion.html. -->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title>Quaternion</title>      
+        <style>
+            body {
+                margin: 0;
+                overflow: hidden;
+            }        
+            #glCanvas {
+                width: 100vw;
+                height: 100vh;
+                display: block;
+            }    
+        </style>
+        <script id="vertex-shader" type="x-shader/x-vertex">
+            uniform float aspect;
+            uniform mat4 transformation;
+
+            attribute vec3 position;
+            attribute vec4 color;
+
+            varying vec4 fColor;
+    
+            void main(void) {
+                vec4 pos = transformation * vec4(position.x, position.y, position.z, 1.0);
+                gl_Position = vec4(pos.x, pos.y * aspect, pos.z, 1.0);
+                fColor = color;
+            }
+        </script>          
+        <script id="fragment-shader" type="x-shader/x-fragment">
+            precision mediump float;
+            varying vec4 fColor;
+
+            void main(void) {
+                gl_FragColor = fColor;
+            }
+        </script>        
+    </head>
+    <body>
+        <canvas id="glCanvas">
+        <script type="module" src="index-gl.js"> </script> 
+    </body>
+</html>
